@@ -6,6 +6,7 @@ import re
 import time
 
 import flask
+import flask_cors
 
 from docker_registry.core import compat
 from docker_registry.core import exceptions
@@ -73,6 +74,7 @@ def get_tags(namespace, repository):
 
 
 @app.route('/v1/repositories/<path:repository>/tags', methods=['GET'])
+@flask_cors.cross_origin(methods=['GET'])  # allow all origins (*)
 @toolkit.parse_repository_name
 @toolkit.requires_auth
 @mirroring.source_lookup_tag
@@ -89,6 +91,7 @@ def _get_tags(namespace, repository):
 
 
 @app.route('/v1/repositories/<path:repository>/tags/<tag>', methods=['GET'])
+@flask_cors.cross_origin(methods=['GET'])  # allow all origins (*)
 @toolkit.parse_repository_name
 @toolkit.requires_auth
 @mirroring.source_lookup_tag

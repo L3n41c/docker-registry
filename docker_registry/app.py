@@ -16,6 +16,7 @@ from . import toolkit
 from .lib import config
 from .server import __version__
 import flask
+import flask_cors
 
 # configure logging prior to subsequent imports which assume
 # logging has been configured
@@ -31,6 +32,7 @@ app = flask.Flask('docker-registry')
 
 @app.route('/_ping')
 @app.route('/v1/_ping')
+@flask_cors.cross_origin(methods=['GET'])  # allow all origins (*)
 def ping():
     headers = {'X-Docker-Registry-Standalone': cfg.standalone is True}
     if mirroring.is_mirror():

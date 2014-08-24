@@ -6,6 +6,7 @@ import logging
 import time
 
 import flask
+import flask_cors
 
 from docker_registry.core import compat
 from docker_registry.core import exceptions
@@ -313,6 +314,7 @@ def get_private_image_json(image_id):
 
 
 @app.route('/v1/images/<image_id>/json', methods=['GET'])
+@flask_cors.cross_origin(methods=['GET'])  # allow all origins (*)
 @toolkit.requires_auth
 @require_completion
 @set_cache_headers
